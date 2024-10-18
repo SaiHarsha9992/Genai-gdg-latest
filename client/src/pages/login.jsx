@@ -31,7 +31,7 @@ function Login()
     function Logins()
     {
         console.log("i a");
-        axios.post('https://genai-gdg-latest.vercel.app/login/',data)
+        axios.post('/login/',data)
         .then((res)=>{
             setval(res.data);
             console.log(res.data);
