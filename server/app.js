@@ -248,6 +248,20 @@ const schema=new mongoose.Schema({
     },
 })
 
+// Define allowed origins, e.g., your client URL
+const allowedOrigins = ['https://genai-gdg-latest-client.vercel.app'];
+
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,  // This allows cookies and authorization headers to be sent
+};
+
 const MODEL=mongoose.model('google',schema);
 
 
@@ -320,7 +334,7 @@ async function Inserting(req,res)
 }
 const app=express();
 app.use(express.json());
-app.use(cors());
+app.use(cors(allowedOrigins));
 
 app.post('/login',Login);
 app.get('/getting',Getting);
